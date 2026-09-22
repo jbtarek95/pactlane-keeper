@@ -1,43 +1,13 @@
-name: Pactlane Keeper
+name: Keeper Runner Test
 
 on:
-  workflow_dispatch:
   push:
     branches:
       - main
-  schedule:
-    - cron: "17 * * * *"
-
-permissions:
-  contents: read
-
-concurrency:
-  group: pactlane-keeper
-  cancel-in-progress: false
 
 jobs:
-  keeper:
+  test:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-    env:
-      BASE_SEPOLIA_RPC: https://sepolia.base.org
-      ESCROW_ADDRESS: 0xb9a1fb6655704821861d405c3e1616b4412015f1
-      MAX_SCAN: "200"
-      DRY_RUN: "true"
-      KEEPER_PRIVATE_KEY: ${{ secrets.KEEPER_PRIVATE_KEY }}
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-          cache: npm
-
-      - name: Install dependencies
-        run: npm install --ignore-scripts --no-audit --no-fund
-
-      - name: Run keeper
-        run: npm run keeper
+      - name: Runner check
+        run: echo "github-actions-runner-ok"
