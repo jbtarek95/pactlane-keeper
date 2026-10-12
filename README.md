@@ -9,7 +9,7 @@ This service scans Pactlane Escrow V2 and triggers only the permissionless `rele
 - Network: Base Sepolia only
 - Chain ID: 84532
 - Escrow V2: `0xb9a1fb6655704821861d405c3e1616b4412015f1`
-- Schedule: hourly through GitHub Actions
+- Schedule: NOT enabled (CI only; activate separate scheduled dry-run after full keeper review)
 - Default mode: dry run
 - Mainnet: disabled
 
