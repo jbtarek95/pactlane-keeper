@@ -1,13 +1,27 @@
-name: Keeper Runner Test
+name: Pactlane Keeper CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
-  test:
+  keeper-checks:
     runs-on: ubuntu-latest
     steps:
-      - name: Runner check
-        run: echo "github-actions-runner-ok"
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci --ignore-scripts --no-fund
+      - name: Audit dependencies
+        run: npm audit --omit=dev --audit-level=moderate
+      - name: Check keeper syntax
+        run: node --check keeper.mjs
